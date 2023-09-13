@@ -1,60 +1,122 @@
 <html>
 <style>
 body {
+    overflow: hidden;
+    margin: 0px;
+    padding: 0px;
     font-family: Arial, sans-serif;
+    background: #c5bde1;
+}
+
+div {
+    color: #FF0000;
+}
+
+#form {
+    color: #000;
+    border: 0px solid #afafaf;
+    font-weight: bold;
+    width: 30%;
+    margin-left: 35%;
+    margin-top: 120px;
     text-align: center;
-    margin: 100px auto;
-    background-color: #555555;
+    padding: 40px;
+    padding-top: 20px;
+    border-radius: 3px;
+    box-shadow: 0px 0px 8px #777;
+    background: rgba(255, 255, 255, 255);
 }
 
-form {
-    display: inline-block;
-    padding: 20px;
-    border: 1px solid #ccc;
-    background-color: #f9f9f9;
-    border-radius: 10px;
-    margin: 250px 400px;
-}
-
-input[type="text"],
-select {
+input {
+    color: #777;
+    font-weight: bold;
+    width: 70%;
     padding: 10px;
-    margin: 5px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    width: 150px;
+    margin: 10px;
+    border: 1px solid #afafaf;
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.5);
+    outline: none;
 }
 
-select {
-    width: 50px;
-}
-
-input[type="submit"] {
-    padding: 10px 20px;
-    background-color: #4caf50;
-    color: #fff;
+button {
+    background-color: #4CAF50;
     border: none;
-    border-radius: 5px;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
     cursor: pointer;
-}
-
-input[type="submit"]:hover {
-    background-color: #45a049;
 }
 </style>
 
 <body>
-    <form action="calc.php" method="post">
-        <input type="text" name="n1" placeholder="Enter a Number" />
-        <select name="op">
-            <option value="add">+</option>
-            <option value="sub">-</option>
-            <option value="mul">x</option>
-            <option value="div">/</option>
-        </select>
-        <input type="text" name="n2" placeholder="Enter a Number" />
-        <input type="submit" value="CALC">
-    </form>
+    <div id="form">
+        <h3>Adding Two Numbers</h3>
+        <div class="text-success" style="text-align: center" id="error">
+        </div>
+        <form action="form.php">
+            <label for="numb1">Number 1:</label>
+            <input type="text" name="numb1" id="numb1" placeholder="First Number" />
+            <br>
+            <label for="numb2">Number 2:</label>
+            <input type="text" name="numb2" id="numb2" placeholder="Second Number" />
+            <br>
+            <button name="submit" class="btn btn-primary" type="submit">Submit</button>
+            <button type="reset" name="clear" class="btn btn-primary">Clear</button>
+        </form>
+
+    </div>
+    <script type="text/javascript" src="jquery-3.2.1.min.js"></script>
+    <script>
+    $(document).ready(function() {
+        $("form").submit(function() {
+            var numb1 = $("#numb1").val();
+            var numb2 = $("#numb2").val();
+
+            var pat = /^[0-9]+$/; //old nic
+
+
+            if (numb1 == "") {
+                $("#error").text("Enter a value");
+                $("#numb1").focus();
+                return false;
+            }
+
+            if (!numb1.match(pat)) {
+                $("#error").text("Enter a number");
+                $("#numb1").focus();
+                return false;
+            }
+
+            if (numb2 == "") {
+                $("#error").text("Enter a value");
+                $("#numb2").focus();
+                return false;
+            }
+            if (!numb2.match(pat)) {
+                $("#error").text("Enter a number");
+                $("#numb1").focus();
+                return false;
+            }
+
+        });
+    });
+    </script>
+    <script>
+    function displayMsg(m) {
+        var r = confirm("Do You want to " + m);
+        if (r) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    </script>
+
 </body>
 
 </html>
