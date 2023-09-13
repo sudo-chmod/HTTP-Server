@@ -20,7 +20,7 @@ while True:
     client, address = server.accept()
     print(f"\n[NEW CONNECTION] {address} connected...\n")
 
-    # Receive requset data
+    # Receive request data
     req = client.recv(4096).decode('utf-8').split("\r\n")
     # print(req)
 
@@ -57,6 +57,15 @@ while True:
                 file_location = os.path.join(file_location, "index.php")
             else:
                 res = "HTTP/1.1 404 Not Found\r\n\r\n404 File Not Found"
+
+                # Send response
+                client.sendall(res.encode('utf-8'))
+
+                # Close the connection
+                client.close()
+
+                # Move to the next connection
+                continue
 
         # Check if the called file is a php file or not
         if (file_location.endswith(".php")):
@@ -125,8 +134,6 @@ while True:
             except:
                 res = "HTTP/1.1 500 Internal Server Error\r\n\r\n500 Internal Server Error"
     else:
-        print("File not exists")
-
         res = "HTTP/1.1 404 Not Found\r\n\r\n404 File Not Found"
 
     # Send response
